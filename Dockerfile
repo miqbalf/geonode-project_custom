@@ -39,11 +39,14 @@ RUN chmod +x /usr/bin/celery-cmd
 
 RUN yes w | pip install --src /usr/src -r requirements.txt &&\
     yes w | pip install -e .
+    
 
 # Cleanup apt update lists
 RUN apt-get autoremove --purge &&\
     apt-get clean &&\
     rm -rf /var/lib/apt/lists/*
+
+RUN pip install -i https://pypi.org/simple/ djangorestframework-simplejwt
 
 # Export ports
 EXPOSE 8000

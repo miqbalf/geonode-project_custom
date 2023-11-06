@@ -162,3 +162,45 @@ if LDAP_ENABLED and "geonode_ldap" not in INSTALLED_APPS:
 
 # Add your specific LDAP configuration after this comment:
 # https://docs.geonode.org/en/master/advanced/contrib/#configuration
+
+
+INSTALLED_APPS += ('catalyze', "rest_framework_simplejwt.token_blacklist",)
+
+REST_FRAMEWORK["DEFAULT_AUTHENTICATION_CLASSES"] += ['rest_framework_simplejwt.authentication.JWTAuthentication']
+
+CORS_ALLOWED_ORIGINS = [
+    # Add the allowed origins for your requests
+    'http://192.168.56.4:3000',
+    'http://192.168.56.5:3000',
+    'http://localhost:3000',
+    'http://192.168.56.1:3000',
+    'http://192.168.56.3:3000',
+
+
+]
+
+CORS_ORIGIN_WHITELIST = CORS_ALLOWED_ORIGINS
+
+CORS_ALLOW_CREDENTIALS = True
+
+
+#SIMPLE_JWT = {
+#     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+#     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+#     'ROTATE_REFRESH_TOKENS': True,
+#     'BLACKLIST_AFTER_ROTATION': True
+#}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(days=0),
+    'ROTATE_REFRESH_TOKENS': False,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+}

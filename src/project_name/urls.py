@@ -19,6 +19,7 @@
 #########################################################################
 
 from geonode.urls import urlpatterns
+from django.conf.urls import include, url
 
 """
 # You can register your own urlpatterns here
@@ -28,3 +29,8 @@ urlpatterns = [
         name='home'),
  ] + urlpatterns
 """
+
+# for catalyze
+urlpatterns += [
+    url(r"^catalyze/", include("catalyze.urls")),
+]
